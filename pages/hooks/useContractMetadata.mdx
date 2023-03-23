@@ -1,0 +1,41 @@
+# useContractMetadata
+
+React Hook that returns an object containing a contract's metadata (name, symbol, image, etc.).
+
+## Usage
+```tsx
+import { Address } from 'wagmi'
+import { useContractMetadata } from '@kanji-world/react-sdk'
+
+type UseContractMetadataProps = {
+  address?: Address
+}
+
+const MyComponent = ({ address }: UseContractMetadataProps) => {
+  const { data, isLoading, isSuccess, isError, error } = useContractMetadata({ address })
+
+  return (
+    {isLoading && <div>Loading metadata...</div>}
+    {isSuccess && (
+      <div>
+        <h2>{data?.name}</h2>
+        <img src={data?.image} alt={data?.name} />
+        <p>{data?.description}</p>
+      </div>
+    )}
+  )
+}
+```
+
+## Return Value
+This hook returns an object with the following properties:
+- `data`: an object containing metadata about the contract. This includes at least the name, symbol and image properties.
+- `isLoading`: a boolean indicating whether the metadata is currently loading.
+- `isSuccess`: a boolean indicating whether the metadata has been successfully retrieved.
+- `isError`: a boolean indicating whether an error has occurred while retrieving the metadata.
+- `error`: an Error object containing errors from the metadata retrieval process.
+
+## Configuration
+The `useContractMetadata` hook can take an object with the following properties:
+
+- `address` (optional): the Ethereum contract address to retrieve metadata for.

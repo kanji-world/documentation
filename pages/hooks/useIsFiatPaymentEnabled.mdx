@@ -1,0 +1,32 @@
+
+# useIsFiatPaymentEnabled
+
+This hook is designed to retrieve information about whether or not a given address has enabled fiat payments through the API.
+
+## Usage
+
+```tsx
+import { useIsFiatPaymentEnabled } from '@kanji-world/react-sdk'
+
+const MyComponent = ({ address }) => {
+  const { isFiatPaymentEnabled, isLoading, isError, isSuccess, error } = useIsFiatPaymentEnabled({ address })
+
+  // render component based on data and loading/error state
+}
+```
+
+## Return Value
+
+This hook returns an object with the following properties:
+
+- `isFiatPaymentEnabled`: a boolean indicating whether fiat payment is enabled for the specified address.
+- `isLoading`: a boolean indicating whether the query is currently being loaded.
+- `isError`: a boolean indicating whether an error has occurred while loading the query.
+- `isSuccess`: a boolean indicating whether the query has been successfully loaded.
+- `error`: an Error object containing errors from the query loading process.
+
+## Configuration
+
+The `useIsFiatPaymentEnabled` hook accepts an object with the following properties:
+
+- `address` (optional): the address to check if fiat payment is enabled for.

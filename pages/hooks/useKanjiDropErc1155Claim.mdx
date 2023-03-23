@@ -1,0 +1,37 @@
+# useKanjiDropErc1155Claim
+
+React Hook that initiates a claim for an ERC1155 token edition, given the recipient's address, quantity of tokens to be claimed and a merkle proof.
+
+## Description
+This hook is used to initiate a claim for ERC1155 token edition.
+
+## Usage
+```tsx
+import { useKanjiDropErc1155Claim } from '@kanji-world/react'
+
+const { claim, isError, isLoading, isSuccess, error } = useKanjiDropErc1155Claim({
+  address,
+  to,
+  quantity,
+  editionId,
+  onSuccess
+})
+```
+
+## Return Value
+An object with the following properties:
+- `claim`: a function to trigger the execution of the 'claim' function on the ERC1155 contract.
+- `isError`: a boolean indicating whether an error has occurred while preparing, executing or waiting for the claim transaction.
+- `isLoading`: a boolean indicating whether the claim transaction is currently in progress.
+- `isSuccess`: a boolean indicating whether the claim transaction has been successfully completed.
+- `error`: an Error object containing errors from the claim transaction process.
+
+## Configuration
+This hook takes an object with the following properties as input:
+- `address: Address`: The address of the ERC1155 contract.
+- `to?: Address`: The address of the recipient of the tokens.
+- `quantity?: BigNumberish`: The quantity of tokens being claimed.
+- `editionId?: BigNumberish`: The ID of the ERC1155 token edition being claimed.
+- `onSuccess?: () => MaybePromise<void>`: A callback function to be called when the transaction is successful.
+
+

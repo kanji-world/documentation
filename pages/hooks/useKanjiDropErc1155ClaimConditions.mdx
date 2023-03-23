@@ -1,0 +1,40 @@
+# useKanjiDropErc721ClaimConditions
+
+React Hook that returns an array of ERC721 claim conditions and its loading and error states.
+
+## Description
+
+This React Hook returns an array of ERC721 claim conditions stored in a contract along with its loading and error states based on the provided arguments. It uses `useKanjiDropErc1155ClaimCondition` and `useQuery` hooks from the `@kanji-world/contracts-types` package to fetch the claim conditions and its respective count.
+
+## Usage
+
+```tsx
+import { useKanjiDropErc721ClaimConditions } from '@kanji-world/react-sdk'
+
+function MyComponent() {
+  const { claimConditions, isLoading, isError, error } = useKanjiDropErc721ClaimConditions({
+    address: "0xb9b1eed0aefad0ad8c23f717a6a4d4eb75ffed39",
+    editionId: 1,
+  })
+
+  // Your component logic
+}
+```
+
+## Return Value
+
+An object with the following properties:
+
+- `claimConditions`: an array of objects representing the ERC721 claim conditions stored in the contract.
+- `isLoading`: a boolean indicating whether the claim conditions are currently loading.
+- `isSuccess`: a boolean indicating whether the claim conditions have been successfully retrieved.
+- `isError`: a boolean indicating whether an error has occurred while retrieving the claim conditions.
+- `error`: an Error object containing errors from the claim conditions retrieval process.
+
+## Configuration
+
+The following inputs are accepted by this hook:
+
+- `address` (optional): The address of the ERC721 contract.
+- `editionId` (optional): The unique identifier of the specific edition to get the claim conditions from.
+

@@ -1,0 +1,41 @@
+
+# useKanjiDropErc721Claim
+
+React Hook that returns an object containing `claim` function to claim ERC721 tokens, and loading and error states for each step of the claiming process.
+
+## Usage
+
+```tsx
+import { useKanjiDropErc721Claim } from '@kanji-world/react-sdk'
+
+const { claim, isLoading, isSuccess, isError, error } = useKanjiDropErc721Claim({
+  address: '0x...', // The address of the ERC721 contract
+  to: '0x...', // The recipient of the claimed tokens
+  quantity: 1, // The number of tokens to be claimed
+  onSuccess: () => { /* Callback function to be executed on successful token claiming */ },
+})
+```
+
+## Return Value
+
+The hook returns an object with the following properties:
+
+| Property | Type | Description |
+| -------- | ---- | ----------- |
+| `claim` | Function | A function that can be called to initiate the ERC721 token claiming process. |
+| `isLoading` | Boolean | A boolean indicating whether any of the steps in the claiming process is currently loading. |
+| `isSuccess` | Boolean | A boolean indicating whether all the steps in the claiming process have been successfully completed. |
+| `isError` | Boolean | A boolean indicating whether an error has occurred during any step of the claiming process. |
+| `error` | Error Object | An Error object containing errors from all the steps of the claiming process. |
+
+## Configuration
+
+The hook accepts the following configuration options:
+
+| Property | Type | Required | Description |
+| -------- | ---- | -------- | ----------- |
+| `address` | `Address` | Yes | The address of the ERC721 contract. |
+| `to` | `Address` | Yes | The recipient of the claimed tokens. |
+| `quantity` | `BigNumberish` | Yes | The number of tokens to be claimed. |
+| `onSuccess` | `() => MaybePromise<void>` | No | A callback function to be executed on successful token claiming. |
+

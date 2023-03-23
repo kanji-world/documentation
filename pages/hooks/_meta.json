@@ -1,0 +1,15 @@
+{
+  "useClaimWithFiat": "useClaimWithFiat",
+  "useContractMetadata": "useContractMetadata",
+  "useIsFiatPaymentEnabled":"useIsFiatPaymentEnabled",
+  "useKanjiDropErc1155ActiveClaimCondition": "useKanjiDropErc1155ActiveClaimCondition",
+  "useKanjiDropErc1155Claim": "useKanjiDropErc1155Claim",
+  "useKanjiDropErc1155ClaimConditions": "useKanjiDropErc1155ClaimConditions",
+  "useKanjiDropErc1155IsWhitelisted": "useKanjiDropErc1155IsWhitelisted",
+  "useKanjiDropErc1155TokenMetadata": "useKanjiDropErc1155TokenMetadata",
+  "useKanjiDropErc721ActiveClaimCondition": "useKanjiDropErc721ActiveClaimCondition",
+  "useKanjiDropErc721Claim": "useKanjiDropErc721Claim",
+  "useKanjiDropErc721ClaimConditions": "useKanjiDropErc721ClaimConditions",
+  "useKanjiDropErc721IsWhitelisted": "useKanjiDropErc721IsWhitelisted",
+  "useKanjiDropErc721TokenMetadata": "useKanjiDropErc721TokenMetadata"
+}

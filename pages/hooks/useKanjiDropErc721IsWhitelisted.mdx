@@ -1,0 +1,29 @@
+# useKanjiDropErc721IsWhitelisted
+
+React Hook that returns whether a specific account is whitelisted for a specific ERC721 claim condition.
+
+## Usage
+```tsx
+import { useKanjiDropErc721IsWhitelisted } from '@kanji-world/react-sdk'
+
+const { isWhitelisted, isLoading, isSuccess, isError, error } = useKanjiDropErc721IsWhitelisted({address, account, claimConditionId})
+```
+
+## Return Value
+
+| Property | Type | Description |
+| -------- | ---- | ----------- |
+| isWhitelisted | boolean | Indicates whether the specified account is whitelisted for the specified ERC721 claim condition. |
+| isLoading | boolean | Indicates whether the whitelisting status is currently loading. |
+| isSuccess | boolean | Indicates whether the whitelisting status has been successfully retrieved. |
+| isError | boolean | Indicates whether an error has occurred while retrieving the whitelisting status. |
+| error | Error object | Contains errors from the whitelisting status retrieval process. |
+
+## Configuration
+
+| Parameter | Type | Optional | Description |
+| --------- | ---- | -------- | ----------- |
+| address | string | No | The address of the ERC721 contract. |
+| account | string | No | The account being checked for whitelisting. |
+| claimConditionId | BigNumberish | No | The ID of the claim condition to be checked. |
+
