@@ -1,0 +1,77 @@
+---
+title: 'Kanji'
+---
+
+import { Tabs, Tab } from 'nextra-theme-docs'
+
+# Foreword
+**Kanji SDK** (software development kit) aims to provide simple tools to manipulate smart contracts and the various resources created on the [studio platform](https://kanji.io).
+It is built on top of [`wagmi`](https://github.com/wagmi-dev/wagmi) and [`@rainbow-me/rainbowkit`](https://github.com/rainbow-me/rainbowkit) to apply to industry-leading solutions
+
+## Installation
+
+<div className="max-w-xs mx-auto mt-5 mb-8 text-center install">
+  <Tabs items={['npm', 'pnpm', 'yarn']}>
+    <Tab>
+```bash
+npm i @kanji-world/react-sdk wagmi ethers@^5 @rainbow-me/rainbowkit
+```
+    </Tab>
+    <Tab>
+```bash
+pnpm i @kanji-world/react-sdk wagmi ethers@^5 @rainbow-me/rainbowkit
+```
+    </Tab>
+    <Tab>
+```bash
+yarn add @kanji-world/react-sdk wagmi ethers@^5 @rainbow-me/rainbowkit
+```
+    </Tab>
+  </Tabs>
+</div>
+
+## Overview
+```tsx filename="index.tsx" {7,9} copy
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App'
+import { KanjiProvider } from '@kanji-world/react-sdk'
+
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <KanjiProvider>
+    <App />
+  </KanjiProvider>,
+)
+```
+
+```tsx filename="nft-page.tsx"
+import { useKanjiDropErc721TokenMetadata } from '@kanji-world/react-sdk'
+ 
+function NFTPage() {
+  const { metadata, isError } = useKanjiDropErc721TokenMetadata({
+    address: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d',
+    tokenId: 1
+  })
+ 
+  if (isError)
+    return (
+      <div>
+        Error loading NFT...
+      </div>
+    )
+
+  if (!metadata)
+    return (
+      <div>
+        Loading NFT...
+      </div>
+    )
+
+  return (
+    <div>
+      {metadata.name}
+      <img src={metadata.image} alt="NFT" />
+    </div>
+  )
+}
+```

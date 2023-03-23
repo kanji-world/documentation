@@ -1,0 +1,36 @@
+# useClaimWithFiat
+
+This React Hook provides an easy way to initiate the process of claiming tokens with fiat. It returns an object with `claimWithFiat`, a function that can be called to start the process, along with loading and error states for the mutation process.
+
+## Usage
+
+To use `useClaimWithFiat`, simply import it from its file and call it with an object containing the necessary props. The resulting object will contain `claimWithFiat`, a function that can be called to initiate the token claiming process with fiat.
+
+```tsx
+import { useClaimWithFiat } from '@kanji-world/react-sdk'
+
+const { claimWithFiat, isLoading, isError } = useClaimWithFiat({ address: '0x123...', receiver: '0x456...' })
+```
+
+In the example above, `useClaimWithFiat` is called with an object containing the necessary `address` and `receiver` props. The resulting object contains `claimWithFiat`, `isLoading`, and `isError`, all of which can be used to track the progress of the mutation process.
+
+## Return Value
+
+An object with the following properties:
+
+- `claimWithFiat`: a function that can be called to initiate the token claiming process with fiat.
+- `isLoading`: a boolean indicating whether the mutation process is currently loading.
+- `isSuccess`: a boolean indicating whether the mutation process has been successfully completed.
+- `isError`: a boolean indicating whether an error has occurred during the mutation process.
+- `error`: an Error object containing errors from the mutation process.
+
+## Configuration
+
+The `useClaimWithFiat` hook accepts an object with the following optional properties as configuration:
+
+- `address`: (`0x${string}`) The address of the contract.
+- `reciever`: (`0x${string}`) The recipient of the claimed tokens.
+- `amount`: (number) The amount of tokens to claim.
+- `currency`: (string) The currency to use (e.g. USD).
+- `country`: (string) The country to use for currency conversion (e.g. US).
+- `description`: (string) A description of the payment.

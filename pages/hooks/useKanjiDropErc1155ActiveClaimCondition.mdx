@@ -1,0 +1,43 @@
+# useKanjiDropErc1155ActiveClaimCondition
+
+This React Hook allows you to retrieve the active claim condition of an ERC1155 token edition. It returns an object with the active claim condition, as well as loading and error status indicators.
+
+## Usage
+
+```tsx
+import { useKanjiDropErc1155ActiveClaimCondition } from '@kanji-world/drop-lp-staking'
+
+const MyComponent = () => {
+  const { claimCondition, isLoading, isError, error } = useKanjiDropErc1155ActiveClaimCondition({ address: '0x123456789', editionId: 1 })
+
+  if (isLoading) {
+    return <p>Loading...</p>
+  }
+
+  if (isError) {
+    return <p>Error: {error}</p>
+  }
+
+  return (
+    <div>
+      <p>Active claim condition: {claimCondition}</p>
+    </div>
+  )
+}
+```
+
+## Return Value
+
+This hook returns an object with the following properties:
+
+- `claimCondition`: an object representing the active claim condition of the ERC1155 token edition.
+- `isLoading`: a boolean indicating whether the data is currently being loaded.
+- `isError`: a boolean indicating whether an error has occurred while retrieving the data.
+- `error`: an Error object containing errors from the data retrieval process.
+
+## Configuration
+
+The hook accepts an object with the following properties:
+
+- `address` (optional): the address of the ERC1155 contract. If not provided, the address will default to the current network address.
+- `editionId` (optional): the ID of the ERC1155 token edition being queried. If not provided, the hook will return data for all editions.
