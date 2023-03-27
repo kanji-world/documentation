@@ -2,7 +2,7 @@ import React from 'react'
 import { DocsThemeConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
-  logo: <bold>Kanji SDK</bold>,
+  logo: <span style={{ fontWeight: "bold" }}>Kanji SDK</span>,
   project: {
     link: 'https://github.com/kanji-world/documentation',
   },
