@@ -6,14 +6,46 @@ React Hook that returns an object containing `claim` function to claim ERC721 to
 ## Usage
 
 ```tsx
-import { useKanjiDropErc721Claim } from '@kanji-world/react-sdk'
+import { useKanjiDropErc721Claim } from '@kanji-world/react'
+import { useState } from 'react'
+import { useAccount } from 'wagmi'
 
-const { claim, isLoading, isSuccess, isError, error } = useKanjiDropErc721Claim({
-  address: '0x...', // The address of the ERC721 contract
-  to: '0x...', // The recipient of the claimed tokens
-  quantity: 1, // The number of tokens to be claimed
-  onSuccess: () => { /* Callback function to be executed on successful token claiming */ },
+const [quantity, setQuantity] = useState<number>()
+
+const { address: account } = useAccount()
+
+const { claim, isError, isLoading, isSuccess, error } = useKanjiDropErc721Claim({
+  address,
+  to,
+  quantity,
+  onSuccess
 })
+
+return (
+  <>
+    <input
+      type="number"
+      step="1"
+      value={quantity}
+      onChange={(e) => {
+        e.preventDefault()
+        const value = parseInt(e.target.value)
+        if (value < 0) return
+        setQuantity(parseInt(e.target.value))
+      }}
+    />
+    <button
+      onClick={() => claim?.()}
+      disabled={
+        !account ||
+        !quantity ||
+        isLoading 
+      }
+    >
+      Claim
+    </button>
+  </>
+)
 ```
 
 ## Return Value

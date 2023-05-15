@@ -2,6 +2,17 @@
 
 This React Hook allows you to retrieve the active claim condition of an ERC1155 token edition. It returns an object with the active claim condition, as well as loading and error status indicators.
 
+A claim condition is a structure that represents the sale phases you've set up in the Kanji studio:
+- `startsAt`: the timestamp at which the sale phase starts.
+- `endsAt`: the timestamp at which the sale phase ends.
+- `maxClaimableSupply`: the maximum number of tokens that can be claimed during the sale phase.
+- `supplyClaimed`: the number of tokens that have already been claimed during the sale phase.
+- `quantityLimitPerTransaction`: the maximum number of tokens that can be claimed in a single transaction.
+- `waitTimeInSecondsBetweenClaims`: the minimum number of seconds that must elapse between claims.
+- `merkleRoot`: the Merkle root of the claimable tokens for the sale phase.
+- `pricePerToken`: the price of a token in WEI.
+- `metadata`: the metadata of the sale phase.
+
 ## Usage
 
 ```tsx
