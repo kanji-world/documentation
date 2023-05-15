@@ -4,15 +4,34 @@ This React Hook provides an easy way to initiate the process of claiming tokens 
 
 ## Usage
 
-To use `useClaimWithFiat`, simply import it from its file and call it with an object containing the necessary props. The resulting object will contain `claimWithFiat`, a function that can be called to initiate the token claiming process with fiat.
+To use `useClaimWithFiat`, simply import it from its file and call it with an object containing the necessary props. The resulting object will contain `claimWithFiat`, a function that can be called to initiate the token claiming process with fiat. The function is asynchronous and will resolve as soon as the payment succeeds.
 
 ```tsx
 import { useClaimWithFiat } from '@kanji-world/react-sdk'
+import { useAccount } from 'wagmi'
 
-const { claimWithFiat, isLoading, isError } = useClaimWithFiat({ address: '0x123...', receiver: '0x456...' })
+const { claimWithFiat, isLoading, isError } = useClaimWithFiat({ address: '0x1111111111111111111111111111111111111111', receiver: '0x3333333333333333333333333333333333333333' })
+
+const { address: account } = useAccount()
+
+return (
+  <button
+    onClick={() =>
+      claimWithFiat?.({
+        lastnameCustomer: 'string',
+        firstnameCustomer: 'string',
+        emailCustomer: 'string@string.fr',
+      })
+    }
+    disabled={!account || isLoading}
+  >
+    Fiat Claim
+  </button>
+)
 ```
 
-In the example above, `useClaimWithFiat` is called with an object containing the necessary `address` and `receiver` props. The resulting object contains `claimWithFiat`, `isLoading`, and `isError`, all of which can be used to track the progress of the mutation process.
+In the example above, `useClaimWithFiat` is called with an object containing the necessary `address` (collection address) and `receiver` (the receiver of the tokens) props. The resulting object contains `claimWithFiat`, `isLoading`, and `isError`, all of which can be used to track the progress of the mutation process. Important note that the `isLoading` hook does not reflect the loading state of the actual payment – it reflects the loading state of the callback itself, as it is not available if the `address` or the `receiver` are not provided.
+
 
 ## Return Value
 
@@ -28,9 +47,13 @@ An object with the following properties:
 
 The `useClaimWithFiat` hook accepts an object with the following optional properties as configuration:
 
-- `address`: (`0x${string}`) The address of the contract.
-- `reciever`: (`0x${string}`) The recipient of the claimed tokens.
-- `amount`: (number) The amount of tokens to claim.
-- `currency`: (string) The currency to use (e.g. USD).
-- `country`: (string) The country to use for currency conversion (e.g. US).
-- `description`: (string) A description of the payment.
+- `address`: `0x${string}` The address of the collection contract.
+- `reciever`: `0x${string}` The recipient of the claimed tokens.
+- `amount`: `number` The amount of tokens to claim.
+- `currency`: `string` The currency to use (e.g. USD).
+- `country`: `string` The country to use for currency conversion (e.g. US).
+- `description`: `string` A description of the payment.
+- `urlRedirectSuccess?`: `string` The location to redirect to after a successful payment.
+- `urlRedirectPending?`: `string` The location to redirect to after a pending payment.
+- `urlRedirectFailed?`: `string` The location to redirect to after a failed payment.
+- `urlRedirectError?`: `string` The location to redirect to after an error.

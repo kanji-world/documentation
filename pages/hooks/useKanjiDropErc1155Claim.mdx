@@ -8,6 +8,14 @@ This hook is used to initiate a claim for ERC1155 token edition.
 ## Usage
 ```tsx
 import { useKanjiDropErc1155Claim } from '@kanji-world/react'
+import { useState } from 'react'
+import { useAccount } from 'wagmi'
+
+const [quantity, setQuantity] = useState<number>()
+
+const { address: account } = useAccount()
+
+const editionId = 1
 
 const { claim, isError, isLoading, isSuccess, error } = useKanjiDropErc1155Claim({
   address,
@@ -16,6 +24,32 @@ const { claim, isError, isLoading, isSuccess, error } = useKanjiDropErc1155Claim
   editionId,
   onSuccess
 })
+
+return (
+  <>
+    <input
+      type="number"
+      step="1"
+      value={quantity}
+      onChange={(e) => {
+        e.preventDefault()
+        const value = parseInt(e.target.value)
+        if (value < 0) return
+        setQuantity(parseInt(e.target.value))
+      }}
+    />
+    <button
+      onClick={() => claim?.()}
+      disabled={
+        !account ||
+        !quantity ||
+        isLoading 
+      }
+    >
+      Claim
+    </button>
+  </>
+)
 ```
 
 ## Return Value
