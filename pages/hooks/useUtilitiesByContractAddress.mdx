@@ -1,0 +1,45 @@
+# useUtilitiesByContractAddress
+This React Hook allows you to fetch utilities associated with a specific contract address. It returns an object with the fetched utilities and additional properties for tracking the query status.
+
+## Usage
+To use `useUtilitiesByContractAddress`, import it from its file and call it with an object containing the required props. The resulting object will include the fetched utilities and other properties related to the query.
+
+```tsx
+import { useUtilitiesByContractAddress } from '@kanji-world/react-sdk'
+
+const { utilities, isLoading, isError, error } = useUtilitiesByContractAddress({ contractAddress: '0x1111111111111111111111111111111111111111' })
+
+if (isLoading) {
+  return <div>Loading utilities...</div>
+}
+
+if (isError) {
+  return <div>Error: {error.message}</div>
+}
+
+return (
+  <div>
+    {utilities.map((utility) => (
+      <div key={utility.id}>{utility.name}</div>
+    ))}
+  </div>
+)
+```
+
+In the example above, `useUtilitiesByContractAddress` is called with an object containing the required contractAddress prop. The resulting object includes utilities, an array of fetched utilities, and isLoading, isError, and error properties for tracking the query status and handling errors.
+
+## Return Value
+An object with the following properties:
+
+- `utilities`: An array of utility objects associated with the specified contract address.
+- `isLoading`: A boolean indicating whether the query is currently loading.
+- `isSuccess`: A boolean indicating whether the query has been successfully completed.
+- `isError`: A boolean indicating whether an error has occurred during the query.
+- `error`: An Error object containing details about the error, if any.
+
+## Configuration
+The `useUtilitiesByContractAddress` hook accepts an object with the following optional properties as configuration:
+
+- `contractAddress`: The address of the contract for which to fetch utilities.
+- `onSuccess`: A callback function to be called when the query is successful. It receives the fetched utilities as a parameter.
+- `onError`: A callback function to be called when an error occurs during the query. It receives the error object as a parameter.

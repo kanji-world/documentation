@@ -1,0 +1,176 @@
+# Building an NFT Claim Component
+In this guide, we will walk you through the process of building a React component that enables users to claim an NFT (non-fungible token) using both crypto and fiat payment methods. The component will leverage the provided React SDK and various hooks to interact with the necessary APIs.
+
+## Prerequisites
+Before you begin, ensure that you have the following prerequisites:
+
+- Basic knowledge of React and JavaScript
+- Familiarity with the React SDK and the Wagmi library
+- Access to the necessary APIs for claiming NFTs and processing payments
+
+## Set up the Component
+To get started, create a new React component and import the required dependencies:
+
+```tsx
+import React, { useEffect, useState } from 'react';
+import {
+  Address,
+  goerli,
+  useAccount,
+  useEnsName,
+  useNetwork,
+} from 'wagmi';
+import {
+  useKanjiDropErc721Claim,
+  useKanjiDropErc721IsWhitelisted,
+  useIsFiatPaymentEnabled,
+  useClaimWithFiat,
+  useKanjiDropErc721AGetActiveClaimConditionId
+} from '@kanji-world/react-sdk';
+```
+
+Next, define the component Claim and its required props:
+
+```tsx
+export const Claim = ({ address }: { address?: Address }) => {
+  // Component state
+  const [quantity, setQuantity] = useState<number>();
+  const [message, setMessage] = useState<string | null>(null);
+
+  // Handle payment status messages
+  useEffect(() => {
+    // Check for specific keywords in the URL
+    if (location.search.includes('success')) {
+      setMessage('Payment success!');
+    } else if (location.search.includes('failed') || location.search.includes('error')) {
+      setMessage('Payment failed');
+    } else if (location.search.includes('pending')) {
+      setMessage('Payment pending');
+    }
+  }, [location]);
+
+  // Clear the message after a timeout
+  useEffect(() => {
+    if (message) {
+      const timeoutId = setTimeout(() => {
+        setMessage(null);
+      }, TIME_OUT_NOTIFICATION);
+
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }
+  }, [message]);
+
+  // Retrieve account details
+  const { address: account } = useAccount();
+
+  // Claim NFT with crypto
+  const { claim, isLoading: isLoadingClaim } = useKanjiDropErc721Claim({
+    address,
+    quantity,
+    to: account,
+  });
+
+  // Claim NFT with fiat
+  const { claimWithFiat, isLoading: isLoadingClaimWithFiat } = useClaimWithFiat({
+    address,
+    baseUrl: window.location.href,
+    currency: 'eur',
+  });
+
+  // Get active claim condition ID
+  const { data: claimConditionId, isLoading: isLoadingActiveClaimConditionId } =
+    useKanjiDropErc721AGetActiveClaimConditionId({ address });
+
+  // Check if the user is whitelisted
+  const { isWhitelisted, isLoading: isLoadingIsWhitelisted } = useKanjiDropErc721IsWhitelisted({
+    address,
+    account,
+    claimConditionId,
+  });
+
+  // Check if fiat payment is enabled
+  const { isFiatPaymentEnabled } = useIsFiatPaymentEnabled({ address });
+
+  // Get network information
+  const { chain } = useNetwork();
+
+  // Get ENS name for the account
+  const { data: name } = useEnsName({ address: account });
+
+  // Render the component
+  return (
+    <>
+      {!account ? (
+        <p>Please connect the wallet to claim</p>
+      ) : (
+        <p>
+          <b>
+            Claiming to {name ?? account}:
+            {isWhitelisted ? (
+              <>You're whitelisted! Claiming to {name ?? account}:</>
+            ) : (
+              <>You're not whitelisted!</>
+            )}
+          </b>
+        </p>
+      )}
+      {isLoadingClaim && <p>Claiming...</p>}
+      <input
+        type="number"
+        step="1"
+        value={quantity}
+        onChange={(e) => {
+          e.preventDefault();
+          const value = parseInt(e.target.value);
+          if (value < 0) return;
+          setQuantity(parseInt(e.target.value));
+        }}
+      />
+      <button
+        onClick={() => claim?.()}
+        disabled={
+          !account ||
+          !quantity ||
+          isLoadingClaim ||
+          isLoadingIsWhitelisted ||
+          chain?.id !== goerli.id ||
+          isLoadingActiveClaimConditionId
+        }
+      >
+        Claim
+      </button>
+      <button
+        onClick={() =>
+          claimWithFiat?.({
+            lastnameCustomer: 'string',
+            firstnameCustomer: 'string',
+            emailCustomer: 'string@string.fr',
+          })
+        }
+        disabled={!account || !isFiatPaymentEnabled || isLoadingClaimWithFiat}
+      >
+        Fiat Claim
+      </button>
+      {account}
+      {isFiatPaymentEnabled}
+      {message}
+    </>
+  );
+};
+```
+
+## Explaining the Component
+In the component above, we have defined the Claim component that accepts an address prop. This component provides the following functionality:
+
+- Displays a message asking the user to connect their wallet if no account is detected.
+- Renders a message indicating the user's whitelisting status.
+- Allows the user to input the quantity of NFTs to claim.
+- Provides a button to initiate the claim process using crypto payment.
+- Provides a button to initiate the claim process using fiat payment.
+- Displays the user's account address and the status of fiat payment availability.
+- Handles payment status messages based on the URL parameters.
+
+## Conclusion
+Congratulations! You have successfully implemented the NFT claim component that enables users to claim NFTs using crypto and fiat payment methods. Users can input the quantity of NFTs, initiate the claim process, and receive payment status messages. Remember to replace the placeholder values with actual contract addresses and integrate the necessary APIs to make the component fully functional.
