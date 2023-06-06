@@ -11,5 +11,7 @@
   "useKanjiDropErc721Claim": "useKanjiDropErc721Claim",
   "useKanjiDropErc721ClaimConditions": "useKanjiDropErc721ClaimConditions",
   "useKanjiDropErc721IsWhitelisted": "useKanjiDropErc721IsWhitelisted",
-  "useKanjiDropErc721TokenMetadata": "useKanjiDropErc721TokenMetadata"
+  "useKanjiDropErc721TokenMetadata": "useKanjiDropErc721TokenMetadata",
+  "useGetNFTsOfAccount": "useGetNFTsOfAccount",
+  "useUtilitiesByContractAddress": "useUtilitiesByContractAddress"
 }
